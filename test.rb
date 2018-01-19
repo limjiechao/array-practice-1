@@ -93,9 +93,15 @@ p ['abc', 'ABC', 'B', 'c'].remove_duplicate
 p ['abc', 'abc', 'b', 'c'].remove_duplicate
 
 def union(array_one, array_two)
-  #
+  array_one|array_two
 end
 
 def mergeArray(array_one, array_two)
-  #
+  return nil if (array_one.class != Array || array_two.class != Array)
+  (array_one | array_two).uniq
 end
+
+p union([1, 2, 3], [100, 2, 1, 10])
+p mergeArray([1, 2, 3], [2, 30, 1])
+p mergeArray(123, [2, 30, 1])
+p mergeArray(123, 321)

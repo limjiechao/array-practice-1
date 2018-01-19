@@ -73,7 +73,7 @@ describe Array do
       expect(['ABC', 'abc', 'b', 'c'].remove_duplicate).to eq ['abc', 'b', 'c']
     end
 
-    it 'remove duplicate items from the array' do
+    it 'removes duplicate items from the array' do
       expect(@duplicate.remove_duplicate).to eq [1, 'a', 'b', 2]
     end
   end
@@ -83,6 +83,16 @@ end
 #   expect(subject).not_to eq object
 # end
 #
-# it 'mergeArray' do
-#   expect(subject).not_to eq object
-# end
+describe '#mergeArray' do
+  it 'returns nil when any argument is not array' do
+    expect(mergeArray(123, [2, 30, 1])).to eq nil
+  end
+
+  it 'removes duplicates' do
+    expect(mergeArray([1, 2, 3], [2, 3, 4]).uniq).to eq [1, 2, 3, 4]
+  end
+
+  it 'returns [1, 2, 3, 30] from [1, 2, 3], [2, 30, 1]' do
+    expect(mergeArray([1, 2, 3], [2, 30, 1])).to eq [1, 2, 3, 30]
+  end
+end
