@@ -39,10 +39,10 @@ class Array
   def frequent
     return nil if self.empty?
     keys = self.uniq
-    hashes = Hash.new
-    keys.each_index { |index| hashes[keys[index]] = 0 }
-    self.each { |item| hashes[item] += 1 }
-    "#{hashes.key(hashes.values.max)} (#{hashes.values.max} times)" if hashes.select {|item, frequency| frequency == hashes.values.max}.one?
+    hash = Hash.new
+    keys.each_index { |index| hash[keys[index]] = 0 }
+    self.each { |item| hash[item] += 1 }
+    "#{hash.key(hash.values.max)} (#{hash.values.max} times)" if hash.select {|item, frequency| frequency == hash.values.max}.one?
   end
   # Normal cases
   # - Has to be Array
@@ -93,15 +93,24 @@ p ['abc', 'ABC', 'B', 'c'].remove_duplicate
 p ['abc', 'abc', 'b', 'c'].remove_duplicate
 
 def union(array_one, array_two)
-  array_one|array_two
+  return nil if (array_one.class != Array || array_two.class != Array)
+  array_one | array_two
 end
 
 def mergeArray(array_one, array_two)
   return nil if (array_one.class != Array || array_two.class != Array)
-  (array_one | array_two).uniq
+  hash = Hash.new(0)
+  unique = (array_one | array_two).uniq
+  combined = array_one + array_two
+  combined.each do |item|
+    unique.include?(item) ? hash[item] += 1 : hash[item] += 0
+  end
+  hash.each do |key, value|
+    until hash[key] == 1
+      combined.delete_at(combined.index(key))
+      hash[key] -= 1
+    end
+  end
+  p hash
+  combined
 end
-
-p union([1, 2, 3], [100, 2, 1, 10])
-p mergeArray([1, 2, 3], [2, 30, 1])
-p mergeArray(123, [2, 30, 1])
-p mergeArray(123, 321)

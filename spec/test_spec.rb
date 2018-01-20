@@ -7,7 +7,8 @@ describe String do
 
   describe '#dashes' do
     it 'must be string' do
-      expect(@string.class).to eq String
+      # expect(@string.class).to eq String
+      expect(@string.dashes).to be_an_instance_of(String)
     end
 
     it 'must contain only digits' do
@@ -79,10 +80,20 @@ describe Array do
   end
 end
 
-# it '#union' do
-#   expect(subject).not_to eq object
-# end
-#
+describe '#union' do
+  it 'returns nil when any argument is not array' do
+    expect(union(123, [2, 30, 1])).to eq nil
+  end
+
+  it 'removes duplicates' do
+    expect(union([1, 2, 3], [2, 3, 4]).uniq).to eq [1, 2, 3, 4]
+  end
+
+  it 'merges [1, 2, 3] and [2, 30, 1] into [1, 2, 3, 30]' do
+    expect(union([1, 2, 3], [2, 30, 1])).to eq [1, 2, 3, 30]
+  end
+end
+
 describe '#mergeArray' do
   it 'returns nil when any argument is not array' do
     expect(mergeArray(123, [2, 30, 1])).to eq nil
@@ -92,7 +103,11 @@ describe '#mergeArray' do
     expect(mergeArray([1, 2, 3], [2, 3, 4]).uniq).to eq [1, 2, 3, 4]
   end
 
+  it 'returns [8, 10, 3, 4, 6, 2] from [3, 2, 2, 2, 8, 10, 10] and [3, 4, 6, 2]' do
+    expect(mergeArray([3, 2, 2, 2, 8, 10, 10], [3, 4, 6, 2])).to eq [8, 10, 3, 4, 6, 2]
+  end
+
   it 'returns [1, 2, 3, 30] from [1, 2, 3], [2, 30, 1]' do
-    expect(mergeArray([1, 2, 3], [2, 30, 1])).to eq [1, 2, 3, 30]
+    expect(mergeArray([1, 2, 3], [2, 30, 1])).to eq [3, 2, 30, 1]
   end
 end
